@@ -1,71 +1,73 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainlibrary;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- *
- * @author bikash
- */
 public class UsersDao {
 
+    // Initialize logger for java.util.logging
+    private static final Logger logger = Logger.getLogger(UsersDao.class.getName());
+
+    // Validate user credentials
     public static boolean validate(String name, String password) {
         boolean status = false;
-        try {
-            Connection con = DB.getConnection();
-            String select = "select * from Users where UserName= '" + name + "' and UserPass='"+ password +"'";
-            Statement selectStatement = con.createStatement();
-            ResultSet rs = selectStatement.executeQuery(select);
-            status = rs.next();
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
+        String select = "SELECT id FROM Users WHERE UserName = ? AND UserPass = ?";
+
+        try (Connection con = DB.getConnection(); 
+             PreparedStatement ps = con.prepareStatement(select)) {
+             
+            ps.setString(1, name);
+            ps.setString(2, password);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                status = rs.next(); // Check if a matching record exists
+            }
+        } catch (SQLException e) {
+            // Correct logging with exception using java.util.logging
+            logger.log(Level.SEVERE, String.format("Error while validating user: %s", name), e);
         }
         return status;
     }
 
+    // Check if the user already exists
     public static boolean CheckIfAlready(String UserName) {
         boolean status = false;
-        try {
-            Connection con = DB.getConnection();
-            String select = "select * from Users where UserName= '" + UserName +"'";
-            Statement selectStatement = con.createStatement();
-            ResultSet rs = selectStatement.executeQuery(select);
-            status = rs.next();
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
+        String select = "SELECT id FROM Users WHERE UserName = ?";
+
+        try (Connection con = DB.getConnection(); 
+             PreparedStatement ps = con.prepareStatement(select)) {
+             
+            ps.setString(1, UserName);
+            
+            try (ResultSet rs = ps.executeQuery()) {
+                status = rs.next(); // Check if a matching record exists
+            }
+        } catch (SQLException e) {
+            // Correct logging with exception using java.util.logging
+            logger.log(Level.SEVERE, String.format("Error while checking if user already exists: %s", UserName), e);
         }
         return status;
-
     }
 
+    // Add a new user to the database
     public static int AddUser(String User, String UserPass, String UserEmail, String Date) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
         int status = 0;
-        try {
+        String insert = "INSERT INTO Users(UserPass, RegDate, UserName, Email) VALUES(?, ?, ?, ?)";
 
-            Connection con = DB.getConnection();
-            PreparedStatement ps = con.prepareStatement("insert into Users(UserPass,RegDate,UserName,Email) values(?,?,?,?)");
+        try (Connection con = DB.getConnection(); 
+             PreparedStatement ps = con.prepareStatement(insert)) {
+             
             ps.setString(1, UserPass);
             ps.setString(2, Date);
             ps.setString(3, User);
             ps.setString(4, UserEmail);
+            
             status = ps.executeUpdate();
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            // Correct logging with exception using java.util.logging
+            logger.log(Level.SEVERE, String.format("Error while adding user: %s", User), e);
         }
         return status;
-
     }
-
 }
