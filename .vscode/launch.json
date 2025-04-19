@@ -1,0 +1,124 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "About",
+            "request": "launch",
+            "mainClass": "mainlibrary.About",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "AllStudent",
+            "request": "launch",
+            "mainClass": "mainlibrary.AllStudent",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "BookForm",
+            "request": "launch",
+            "mainClass": "mainlibrary.BookForm",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "DB",
+            "request": "launch",
+            "mainClass": "mainlibrary.DB",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "DeleteBook",
+            "request": "launch",
+            "mainClass": "mainlibrary.DeleteBook",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "IssueBookForm",
+            "request": "launch",
+            "mainClass": "mainlibrary.IssueBookForm",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "LibrarianLogin",
+            "request": "launch",
+            "mainClass": "mainlibrary.LibrarianLogin",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "MainLibrary",
+            "request": "launch",
+            "mainClass": "mainlibrary.MainLibrary",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "NewView",
+            "request": "launch",
+            "mainClass": "mainlibrary.NewView",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "ReturnBookForm",
+            "request": "launch",
+            "mainClass": "mainlibrary.ReturnBookForm",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "UserForm",
+            "request": "launch",
+            "mainClass": "mainlibrary.UserForm",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "UserLogin",
+            "request": "launch",
+            "mainClass": "mainlibrary.UserLogin",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "UserLoginSuccess",
+            "request": "launch",
+            "mainClass": "mainlibrary.UserLoginSuccess",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "UserView",
+            "request": "launch",
+            "mainClass": "mainlibrary.UserView",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "UserViewBook",
+            "request": "launch",
+            "mainClass": "mainlibrary.UserViewBook",
+            "projectName": "SecureAppCA2_16f92ed4"
+        },
+        {
+            "type": "java",
+            "name": "ViewBook",
+            "request": "launch",
+            "mainClass": "mainlibrary.ViewBook",
+            "projectName": "SecureAppCA2_16f92ed4"
+        }
+    ]
+}

@@ -1,41 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainlibrary;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author bikash
+ * @author Yash
  */
 public class DB {
 
-    public static String user = "root";
-    public static String connection = "jdbc:mysql://localhost:3306/library?autoReconnect=true&useSSL=false";
-    
-    public static Connection getConnection() {
-        Connection con = null;
-        try {
-            Properties props = new Properties();
-            props.put("user", user);
-     //change the password to the password  ↓↓↓↓↓↓↓↓↓↓↓   you enteredwhen setting up mysql
-            props.put("password", "password");
-            props.put("useUnicode", "true");
-            props.put("useServerPrepStmts", "false"); // use client-side prepared statement
-            props.put("characterEncoding", "UTF-8"); // ensure charset is utf8 here
+    private static final Logger logger = Logger.getLogger(DB.class.getName());
+    private static Properties properties = new Properties();
 
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection(connection, props);
-        } catch (Exception e) {
-            System.out.println(e);
+    static {
+        try (FileInputStream input = new FileInputStream("config.properties")) {
+            properties.load(input);  // Load configuration from file
+        } catch (IOException ex) {
+            // Log the exception without printing stack trace to console
+            logger.log(Level.SEVERE, "Failed to load configuration file", ex);
         }
-        return con;
     }
 
+    public static Connection getConnection() {
+        try {
+            String user = properties.getProperty("db.user");
+            String password = properties.getProperty("db.password");
+            String url = properties.getProperty("db.url");
+
+            // The driver is now automatically registered, no need for Class.forName
+            // Return the connection
+            return DriverManager.getConnection(url, user, password);
+
+        } catch (SQLException e) {
+            // Log the exception properly instead of printing stack trace
+            logger.log(Level.SEVERE, "Database connection failed", e);
+        }
+        return null;  // Return null if the connection fails
+    }
 }
