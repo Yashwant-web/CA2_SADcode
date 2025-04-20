@@ -2,5 +2,5 @@ projectKey=CA2ApplicationTest
 serverUrl=http://localhost:9000
 serverVersion=25.4.0.105899
 dashboardUrl=http://localhost:9000/dashboard?id=CA2ApplicationTest
-ceTaskId=f07a32f2-e202-4381-86cc-fe03f271ca61
-ceTaskUrl=http://localhost:9000/api/ce/task?id=f07a32f2-e202-4381-86cc-fe03f271ca61
+ceTaskId=d320190a-5694-46d8-81da-bd07f4c30d27
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d320190a-5694-46d8-81da-bd07f4c30d27

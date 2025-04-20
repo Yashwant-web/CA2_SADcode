@@ -1,57 +1,83 @@
 package mainlibrary;
 
-import java.sql.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ViewBook extends javax.swing.JFrame {
-
+public class ViewBook extends javax.swing.JFrame { 
     private static final Logger logger = Logger.getLogger(ViewBook.class.getName());
+
+    
+    private javax.swing.JTable jTable1;
 
     public ViewBook() throws SQLException {
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         initComponents();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        populateTable(model, "SELECT * FROM Books", null); // Fetch all books initially
+        populateTable("SELECT * FROM Books", null); // Fetch all books initially
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
-        // Component initialization (same as original)
-        // Ensure all components like jTable1, SearchField, NameRadio, etc. are properly initialized
+        // Initialize components here (table, buttons, radio buttons, etc.)
+        jTable1 = new javax.swing.JTable();
+        SearchField = new javax.swing.JTextField();
+        NameRadio = new javax.swing.JRadioButton("Name");
+        AuthorRadio = new javax.swing.JRadioButton("Author");
+        ALL = new javax.swing.JRadioButton("ALL");
+        Search = new javax.swing.JButton("Search");
+        jButton1 = new javax.swing.JButton("Close");
+
+        // Initialize table model
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {"Book ID", "Book Name", "Author", "Publisher", "Year"}
+        ));
+
+        // Set up button actions
+        Search.addActionListener(evt -> handleSearchAction(evt));
+        ALL.addActionListener(evt -> handleALLAction(evt));
+        NameRadio.addActionListener(evt -> handleRadioAction(evt));
+        AuthorRadio.addActionListener(evt -> handleRadioAction(evt));
+        jButton1.addActionListener(evt -> handleCloseAction(evt));
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void handleSearchAction(java.awt.event.ActionEvent evt) {
+        String searchTerm = "%" + SearchField.getText().trim() + "%";
+        if (NameRadio.isSelected()) {
+            populateTable("SELECT * FROM Books WHERE BookName LIKE ?", searchTerm);
+        } else if (AuthorRadio.isSelected()) {
+            populateTable("SELECT * FROM Books WHERE Author LIKE ?", searchTerm);
+        } else {
+            JOptionPane.showMessageDialog(this, "Select Name or Author", "No Selection!", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void handleALLAction(java.awt.event.ActionEvent evt) {
+        populateTable("SELECT * FROM Books", null); // Show all books
+    }
+
+    private void handleRadioAction(java.awt.event.ActionEvent evt) {
+        // Deselect other radio buttons when one is selected
+        AuthorRadio.setSelected(false);
+        ALL.setSelected(false);
+    }
+
+    private void handleCloseAction(java.awt.event.ActionEvent evt) {
         this.dispose();  // Close the window
     }
 
-    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {
+    // Helper method to clear the table
+    private void clearTable() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        while (model.getRowCount() > 0) {
-            model.removeRow(model.getRowCount() - 1);
-        }
-
-        String searchTerm = "%" + SearchField.getText().trim() + "%";  // Sanitize input
-        if (NameRadio.isSelected()) {
-            populateTable(model, "SELECT * FROM Books WHERE BookName LIKE ?", searchTerm);
-        } else if (AuthorRadio.isSelected()) {
-            populateTable(model, "SELECT * FROM Books WHERE Author LIKE ?", searchTerm);
-        } else {
-            JOptionPane.showMessageDialog(ViewBook.this, "Select Name or Author", "No Selection!", JOptionPane.ERROR_MESSAGE);
-        }
+        model.setRowCount(0);  // Clears all rows from the table
     }
 
-    private void ALLActionPerformed(java.awt.event.ActionEvent evt) {
+    // Helper method to populate the table with data from the database
+    private void populateTable(String query, String searchTerm) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        while (model.getRowCount() > 0) {
-            model.removeRow(model.getRowCount() - 1);
-        }
-        populateTable(model, "SELECT * FROM Books", null);  // Show all books
-    }
-
-    private void populateTable(DefaultTableModel model, String query, String searchTerm) {
+        clearTable();  // Clear existing data in the table
         try (Connection con = DB.getConnection()) {
             PreparedStatement ps = con.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             if (searchTerm != null) {
@@ -60,37 +86,25 @@ public class ViewBook extends javax.swing.JFrame {
             ResultSet rs = ps.executeQuery();
             ResultSetMetaData rsmd = rs.getMetaData();
             int colnum = rsmd.getColumnCount();
-
             while (rs.next()) {
                 String[] row = new String[colnum];
                 for (int i = 1; i <= colnum; i++) {
                     row[i - 1] = rs.getString(i);
                 }
-                model.addRow(row);  // Add row to the table
+                model.addRow(row);
             }
-
+            // If no results found, show a message
             if (model.getRowCount() == 0) {
                 String[] noRow = new String[colnum];
                 noRow[0] = "No result found";
                 for (int i = 1; i < colnum; i++) {
                     noRow[i] = "";
                 }
-                model.addRow(noRow);  // Add no result message
+                model.addRow(noRow);  // Add "No result found" message
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Error while querying database", e);  // Log the error
         }
-    }
-
-    // Event handler methods for radio buttons (NameRadio, AuthorRadio) 
-    private void NameRadioActionPerformed(java.awt.event.ActionEvent evt) {
-        AuthorRadio.setSelected(false);
-        ALL.setSelected(false);
-    }
-
-    private void AuthorRadioActionPerformed(java.awt.event.ActionEvent evt) {
-        NameRadio.setSelected(false);
-        ALL.setSelected(false);
     }
 
     public static void main(String args[]) {
@@ -114,7 +128,5 @@ public class ViewBook extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-
 }
