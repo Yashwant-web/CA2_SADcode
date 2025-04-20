@@ -65,7 +65,7 @@
             <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="Developed by:&#xa;             Bikash Kumar Tudu&#x9;&#x9;&#x9;Kalkute Piyush Premchand&#xa;             CSE150001006&#x9;&#x9;&#x9;CSE150001013&#xa;"/>
+            <Property name="text" type="java.lang.String" value="Developed by:&#xa;             Yashwant Salunkhe&#xa;             x23284811&#xa;"/>
           </Properties>
         </Component>
       </SubComponents>

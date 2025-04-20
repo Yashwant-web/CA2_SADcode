@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainlibrary;
 
-/**
- *
- * @author bikash
- */
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.sql.*;
+
 public class About extends javax.swing.JFrame {
 
     /**
@@ -38,7 +33,7 @@ public class About extends javax.swing.JFrame {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Developed by:\n             Bikash Kumar Tudu\t\t\tKalkute Piyush Premchand\n             CSE150001006\t\t\tCSE150001013\n");
+        jTextArea1.setText("Developed by:\n             Yashwant Salukhe\t\t\tX23284811\n");
         jScrollPane1.setViewportView(jTextArea1);
 
         jButton1.setText("Back");
@@ -117,7 +112,6 @@ public class About extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(About.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
