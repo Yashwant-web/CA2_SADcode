@@ -43,7 +43,7 @@ Set the sonar.token property in the sonar-project.properties file or set the SON
 
 Run SonarScanner:
 
-sonar-scanner
+    sonar-scanner
 
 Set up and configure OWASP ZAP:
 
