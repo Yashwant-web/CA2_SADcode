@@ -1,5 +1,4 @@
 # CA2_SADcode
-# CA2_SADcode
 **Secure Application Development - Project**
 
 This repository contains a secure application development project focused on implementing security controls, identifying vulnerabilities, and applying secure coding practices.
@@ -32,9 +31,9 @@ OWASP ZAP
 **Steps:**
 Clone the repository: 
 
-git clone https://github.com/yourusername/secure-app.git
-
-cd secure-app
+    git clone https://github.com/yourusername/secure-app.git
+    
+    cd secure-app
 
 Set up SonarScanner:
 
