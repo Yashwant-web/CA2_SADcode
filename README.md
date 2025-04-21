@@ -1,8 +1,10 @@
 # CA2_SADcode
 **Secure Application Development - Project**
+
 This repository contains a secure application development project focused on implementing security controls, identifying vulnerabilities, and applying secure coding practices.
 
 **Project Overview**
+
 The goal of this project is to develop an application with strong security practices by addressing key security issues such as SQL injection, Cross-Site Scripting (XSS), session management, and securing credentials. The project also includes security testing using state-of-the-art tools and techniques.
 
 **Table of Contents**
