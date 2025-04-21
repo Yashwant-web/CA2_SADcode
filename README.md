@@ -5,17 +5,17 @@ This repository contains a secure application development project focused on imp
 Project Overview
 The goal of this project is to develop an application with strong security practices by addressing key security issues such as SQL injection, Cross-Site Scripting (XSS), session management, and securing credentials. The project also includes security testing using state-of-the-art tools and techniques.
 Table of Contents
-Installation
+- Installation
 
-Tools and Technologies
+- Tools and Technologies
 
-Security Testing
+- Security Testing
 
-Code Review
+- Code Review
 
-Proposed Solutions
+- Proposed Solutions
 
-Contributors
+- Contributors
 
 Installation
 Prerequisites:
